@@ -7,12 +7,16 @@ import jakarta.persistence.*;
 public class WalletType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String description;
 
     public WalletType(){}
+
+    public WalletType(Long id, String description) {
+        this.id = id;
+        this.description = description;
+    }
 
     public String getDescription() {
         return description;
@@ -28,5 +32,22 @@ public class WalletType {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public enum enumWalletType{
+
+        USER(1L, "user"), MERCHANT(2L, "merchant");
+
+        enumWalletType(Long id, String description) {
+            this.id = id;
+            this.description = description;
+        }
+
+        private Long id;
+        private String description;
+
+        public WalletType get(){
+            return new WalletType(id, description);
+        }
     }
 }
