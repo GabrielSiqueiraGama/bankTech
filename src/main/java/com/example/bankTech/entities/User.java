@@ -24,8 +24,7 @@ public class User {
 
     private BigDecimal ballance = BigDecimal.ZERO;
 
-    @JoinColumn(name="user_type_id")
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
     private UserType userType;
 
     public User(){}
