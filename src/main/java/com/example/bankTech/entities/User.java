@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name="tb_wallet")
-public class Wallet {
+@Table(name="tb_user")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,17 +18,17 @@ public class Wallet {
     private String email;
 
     @Column(unique = true)
-    private String cpfCnpj;
+    private String document;
 
     private String password;
 
     private BigDecimal ballance = BigDecimal.ZERO;
 
-    @JoinColumn(name="wallet_type_id")
+    @JoinColumn(name="user_type_id")
     @ManyToOne
-    private WalletType walletType;
+    private UserType userType;
 
-    public Wallet(){}
+    public User(){}
 
     public String getEmail() {
         return email;
@@ -62,20 +62,20 @@ public class Wallet {
         this.password = password;
     }
 
-    public String getCpfCnpj() {
-        return cpfCnpj;
+    public String getDocument() {
+        return document;
     }
 
-    public void setCpfCnpj(String cpfCnpj) {
-        this.cpfCnpj = cpfCnpj;
+    public void setDocument(String document) {
+        this.document = document;
     }
 
-    public WalletType getWalletType() {
-        return walletType;
+    public UserType getUserType() {
+        return userType;
     }
 
-    public void setWalletType(WalletType walletType) {
-        this.walletType = walletType;
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 
     public BigDecimal getBallance() {

@@ -3,17 +3,17 @@ package com.example.bankTech.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="tb_wallet_type")
-public class WalletType {
+@Table(name="tb_user_type")
+public class UserType {
 
     @Id
     private Long id;
 
     private String description;
 
-    public WalletType(){}
+    public UserType(){}
 
-    public WalletType(Long id, String description) {
+    public UserType(Long id, String description) {
         this.id = id;
         this.description = description;
     }
@@ -34,11 +34,11 @@ public class WalletType {
         this.id = id;
     }
 
-    public enum enumWalletType{
+    public enum enumUserType{
 
         USER(1L, "user"), MERCHANT(2L, "merchant");
 
-        enumWalletType(Long id, String description) {
+        enumUserType(Long id, String description) {
             this.id = id;
             this.description = description;
         }
@@ -46,8 +46,8 @@ public class WalletType {
         private Long id;
         private String description;
 
-        public WalletType get(){
-            return new WalletType(id, description);
+        public UserType get(){
+            return new UserType(id, description);
         }
     }
 }
