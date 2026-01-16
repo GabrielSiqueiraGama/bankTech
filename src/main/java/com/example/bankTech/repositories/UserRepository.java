@@ -1,6 +1,6 @@
 package com.example.bankTech.repositories;
 
-import com.example.bankTech.entities.User;
+import com.example.bankTech.entities.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

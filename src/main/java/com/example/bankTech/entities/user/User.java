@@ -1,4 +1,4 @@
-package com.example.bankTech.entities;
+package com.example.bankTech.entities.user;
 
 import jakarta.persistence.*;
 
@@ -22,12 +22,22 @@ public class User {
 
     private String password;
 
-    private BigDecimal ballance = BigDecimal.ZERO;
+    private BigDecimal balance = BigDecimal.ZERO;
 
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
     public User(){}
+
+    public User(Long id, String fullname, String email, String document, String password, BigDecimal balance, UserType userType) {
+        this.id = id;
+        this.fullname = fullname;
+        this.email = email;
+        this.document = document;
+        this.password = password;
+        this.balance = balance;
+        this.userType = userType;
+    }
 
     public String getEmail() {
         return email;
@@ -77,11 +87,11 @@ public class User {
         this.userType = userType;
     }
 
-    public BigDecimal getBallance() {
-        return ballance;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public void setBallance(BigDecimal ballance) {
-        this.ballance = ballance;
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 }
