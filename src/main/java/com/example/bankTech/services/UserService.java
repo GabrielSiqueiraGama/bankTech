@@ -36,7 +36,11 @@ public class UserService {
         return userRepository.findById(id).map(userMapper::toDTO).orElseThrow(()-> new UserNotFoundException(id));
     }
 
-    public void saveUser(UserRequestDTO userRequestDTO){
-        userMapper.toDTO(userRepository.save(userMapper.toEntity(userRequestDTO)));
+    public User findEntityById(Long id){
+        return userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id));
+    }
+
+    public void saveUser(User user){
+        userRepository.save(user);
     }
 }
