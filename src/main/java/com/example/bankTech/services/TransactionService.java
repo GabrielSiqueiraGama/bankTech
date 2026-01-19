@@ -37,13 +37,13 @@ public class TransactionService {
     }
 
     @Transactional
-    public void createTransaction(TransactionResponseDTO transactionResponseDTO){
-        User sender = userService.findEntityById(transactionResponseDTO.sender_id());
-        User receiver = userService.findEntityById(transactionResponseDTO.receiver_id());
+    public Transaction createTransaction(TransactionRequestDTO transactionResponseDTO){
+        User sender = userService.findEntityById(transactionResponseDTO.sender());
+        User receiver = userService.findEntityById(transactionResponseDTO.receiver());
 
-        userService.checkTransactionPermission(sender, transactionResponseDTO.value());
+        userService.checkTransactionPermission(sender, transactionResponseDTO.amount());
 
-        boolean isAuthorizated = this.authorizateTransaction(sender, transactionResponseDTO.value());
+        boolean isAuthorizated = this.authorizateTransaction(sender, transactionResponseDTO.amount());
 
         if(!isAuthorizated){
             throw new TransactionNotAllowedException("Transaction not allowed. " +
@@ -52,17 +52,19 @@ public class TransactionService {
         }
 
         Transaction newTransaction = new Transaction();
-        newTransaction.setAmount(transactionResponseDTO.value());
+        newTransaction.setAmount(transactionResponseDTO.amount());
         newTransaction.setSender(sender);
         newTransaction.setReceiver(receiver);
         newTransaction.setTimestamp(LocalDateTime.now());
 
-        sender.setBalance(sender.getBalance().subtract(transactionResponseDTO.value()));
-        receiver.setBalance(receiver.getBalance().add(transactionResponseDTO.value()));
+        sender.setBalance(sender.getBalance().subtract(transactionResponseDTO.amount()));
+        receiver.setBalance(receiver.getBalance().add(transactionResponseDTO.amount()));
 
         this.transactionRepository.save(newTransaction);
         this.userService.saveUser(sender);
         this.userService.saveUser(receiver);
+
+        return newTransaction;
     }
 
     public boolean authorizateTransaction(User sender, BigDecimal value){
