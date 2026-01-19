@@ -12,6 +12,7 @@ import com.example.bankTech.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -38,6 +39,14 @@ public class UserService {
 
     public User findEntityById(Long id){
         return userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id));
+    }
+
+    public UserResponseDTO createUser(UserRequestDTO userRequestDTO){
+        return userMapper.toDTO(userRepository.save(userMapper.toEntity(userRequestDTO)));
+    }
+
+    public List<UserResponseDTO> findAll(){
+        return userRepository.findAll().stream().map(userMapper::toDTO).toList();
     }
 
     public void saveUser(User user){
