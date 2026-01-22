@@ -17,13 +17,11 @@ import java.util.Optional;
 @DataJpaTest
 @ActiveProfiles("test")
 class UserRepositoryTest {
-    private final EntityManager entityManager;
-    private final UserRepository userRepository;
+    @Autowired
+    private EntityManager entityManager;
+    @Autowired
+    private UserRepository userRepository;
 
-    public UserRepositoryTest(EntityManager entityManager, UserRepository userRepository) {
-        this.entityManager = entityManager;
-        this.userRepository = userRepository;
-    }
 
     @Test
     @DisplayName("Should return sucessfully")

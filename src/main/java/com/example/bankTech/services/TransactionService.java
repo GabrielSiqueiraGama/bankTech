@@ -46,9 +46,7 @@ public class TransactionService {
         boolean isAuthorizated = this.authorizationService.authorizateTransaction(sender, transactionResponseDTO.amount());
 
         if(!isAuthorizated){
-            throw new TransactionNotAllowedException("Transaction not allowed. " +
-                    "Server does not allow transfers at the moment. " +
-                    "Please try again later.");
+            throw new TransactionNotAllowedException("Transaction not allowed. Server does not allow transfers at the moment. Please try again later.");
         }
 
         Transaction newTransaction = new Transaction();
