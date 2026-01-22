@@ -9,6 +9,12 @@ import com.example.bankTech.exceptions.InsufficientBalanceException;
 import com.example.bankTech.exceptions.TransactionNotAllowedException;
 import com.example.bankTech.exceptions.UserNotFoundException;
 import com.example.bankTech.repositories.UserRepository;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -47,6 +53,21 @@ public class UserService {
 
     public List<UserResponseDTO> findAll(){
         return userRepository.findAll().stream().map(userMapper::toDTO).toList();
+    }
+    
+    public UserResponseDTO update(Long id, UserRequestDTO userRequestDTO) {
+    	return userRepository.findById(id).map(userFunction ->{
+    		userFunction.setFullname(userRequestDTO.fullname());
+    		userFunction.setDocument(userRequestDTO.document());
+    		userFunction.setEmail(userRequestDTO.email());
+    		userFunction.setPassword(userRequestDTO.password());
+    		userFunction.setUserType(userRequestDTO.userType());
+    		return userRepository.save(userFunction);
+    	}).map(userMapper::toDTO).orElseThrow(()-> new UserNotFoundException(id));
+    }
+    public void delete(Long id) {
+    	if(! userRepository.existsById(id)) {throw new UserNotFoundException(id);}
+    	userRepository.deleteById(id);
     }
 
     public void saveUser(User user){
