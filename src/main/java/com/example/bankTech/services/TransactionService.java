@@ -26,14 +26,14 @@ public class TransactionService {
     private final UserMapper userMapper;
     private final TransactionRepository transactionRepository;
     private final TransactionMapper transactionMapper;
-    private final RestTemplate restTemplate;
+    private final AuthorizationService authorizationService;
 
-    public TransactionService(UserService userService, UserMapper userMapper, TransactionRepository transactionRepository, TransactionMapper transactionMapper, RestTemplate restTemplate) {
+    public TransactionService(UserService userService, UserMapper userMapper, TransactionRepository transactionRepository, TransactionMapper transactionMapper, AuthorizationService authorizationService) {
         this.userService = userService;
         this.userMapper = userMapper;
         this.transactionRepository = transactionRepository;
         this.transactionMapper = transactionMapper;
-        this.restTemplate = restTemplate;
+        this.authorizationService = authorizationService;
     }
 
     @Transactional
@@ -43,7 +43,7 @@ public class TransactionService {
 
         userService.checkTransactionPermission(sender, transactionResponseDTO.amount());
 
-        boolean isAuthorizated = this.authorizateTransaction(sender, transactionResponseDTO.amount());
+        boolean isAuthorizated = this.authorizationService.authorizateTransaction(sender, transactionResponseDTO.amount());
 
         if(!isAuthorizated){
             throw new TransactionNotAllowedException("Transaction not allowed. " +
@@ -67,12 +67,5 @@ public class TransactionService {
         return newTransaction;
     }
 
-    public boolean authorizateTransaction(User sender, BigDecimal value){
-        ResponseEntity<Map> response =  restTemplate.getForEntity("https://util.devi.tools/api/v2/authorize", Map.class);
 
-        if(response.getStatusCode() == HttpStatus.OK){
-            String status = (String) response.getBody().get("status");
-            return "success".equalsIgnoreCase(status);
-        }else return false;
-    }
 }
