@@ -2,7 +2,6 @@ package com.example.bankTech.controllers;
 
 import com.example.bankTech.dto.request.UserRequestDTO;
 import com.example.bankTech.dto.response.UserResponseDTO;
-import com.example.bankTech.repositories.UserRepository;
 import com.example.bankTech.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -31,5 +30,15 @@ public class UserController {
     public ResponseEntity<List<UserResponseDTO>> findAll(){
         List<UserResponseDTO> users = userService.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+    
+    @GetMapping
+    public List<UserResponseDTO> listMerchant(){
+    	return userService.listMerchant();
+    }
+    
+    @GetMapping
+    public List<UserResponseDTO> listCommonUsers(){
+    	return userService.listCommonUsers();
     }
 }
