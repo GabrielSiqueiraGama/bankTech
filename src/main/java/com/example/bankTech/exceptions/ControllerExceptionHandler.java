@@ -1,13 +1,14 @@
 package com.example.bankTech.exceptions;
 
 import com.example.bankTech.dto.response.ExceptionDTO;
+import com.example.bankTech.messages.FailureResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestController
+@RestControllerAdvice
 public class ControllerExceptionHandler {
 
     @ExceptionHandler
@@ -20,5 +21,12 @@ public class ControllerExceptionHandler {
     public ResponseEntity e404(EntityNotFoundException exception){
         ExceptionDTO exceptionDTO = new ExceptionDTO("Entity Not Found", "404");
         return ResponseEntity.badRequest().body(exceptionDTO);
+    }
+
+    @ExceptionHandler(PasswordValidationException.class)
+    public ResponseEntity<FailureResponse> handlePasswordValidation(PasswordValidationException ex){
+        return ResponseEntity
+                .badRequest()
+                .body(new FailureResponse(ex.getFailures()));
     }
 }

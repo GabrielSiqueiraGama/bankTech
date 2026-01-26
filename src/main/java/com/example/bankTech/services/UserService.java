@@ -24,10 +24,12 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordService passwordService;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper){
+    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordService passwordService){
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordService = passwordService;
     }
 
     public void checkTransactionPermission(User sender, BigDecimal amount){
