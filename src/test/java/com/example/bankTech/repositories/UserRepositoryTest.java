@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import static org.assertj.core.api.Assertions.*;
-import javax.swing.text.html.Option;
-import java.math.BigDecimal;
 import java.util.Optional;
 
 @DataJpaTest

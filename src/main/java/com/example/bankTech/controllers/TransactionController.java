@@ -1,7 +1,6 @@
 package com.example.bankTech.controllers;
 
 import com.example.bankTech.dto.request.TransactionRequestDTO;
-import com.example.bankTech.dto.response.TransactionResponseDTO;
 import com.example.bankTech.entities.transaction.Transaction;
 import com.example.bankTech.services.TransactionService;
 import jakarta.validation.Valid;

@@ -3,8 +3,6 @@ package com.example.bankTech.services;
 import com.example.bankTech.dto.mapper.TransactionMapper;
 import com.example.bankTech.dto.mapper.UserMapper;
 import com.example.bankTech.dto.request.TransactionRequestDTO;
-import com.example.bankTech.dto.response.TransactionResponseDTO;
-import com.example.bankTech.entities.transaction.Transaction;
 import com.example.bankTech.entities.user.User;
 import com.example.bankTech.entities.user.UserType;
 import com.example.bankTech.exceptions.TransactionNotAllowedException;
@@ -20,7 +18,6 @@ import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

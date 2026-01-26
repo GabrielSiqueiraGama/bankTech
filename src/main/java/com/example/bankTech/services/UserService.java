@@ -10,11 +10,6 @@ import com.example.bankTech.exceptions.TransactionNotAllowedException;
 import com.example.bankTech.exceptions.UserNotFoundException;
 import com.example.bankTech.repositories.UserRepository;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -47,6 +42,14 @@ public class UserService {
 
     public User findEntityById(Long id){
         return userRepository.findById(id).orElseThrow(()-> new UserNotFoundException(id));
+    }
+    
+    public List<UserResponseDTO> listMerchant(){
+    	return userRepository.findByUserType(UserType.MERCHANT).stream().map(userMapper::toDTO).toList();
+    }
+    
+    public List<UserResponseDTO> listCommonUsers(){
+    	return userRepository.findByUserType(UserType.COMMON).stream().map(userMapper::toDTO).toList();
     }
 
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO){
